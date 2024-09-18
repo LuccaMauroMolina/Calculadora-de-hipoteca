@@ -1,0 +1,23 @@
+.form-mort {
+    display: grid;
+    grid-template-columns: 1fr; /* Una columna que ocupa todo el ancho */
+    grid-gap: 16px; /* Espacio entre elementos */
+}
+
+.sect-1{
+    background-color: hsl(0, 0%, 100%);
+    height: 60vh;
+    display: flex;
+    width: 30vw;
+    flex-direction: column;
+    border-bottom-left-radius: 5%;
+    border-top-left-radius: 5%;
+}
+
+.amount{
+    width: 250px;
+}
+
+.mort{
+    width: 125px;
+}

@@ -1,0 +1,8 @@
+.sect-2{
+    background-color: hsl(202, 55%, 16%);
+    height: 60vh;
+    border-bottom-left-radius: 25%;
+    width: 30vw;
+    border-top-right-radius: 5%;
+    border-bottom-right-radius: 5%;
+}
