@@ -1,61 +1,31 @@
-/*import "./MostrarResultado.css"
-const MostrarResultados = ({ resultados,month }) => {
-    return (
-        <div className="sect-2">
-        <img src="../public/images/illustration-empty.svg" alt="Ilustración vacía" />
-        <span className="result">Results shown here</span>
-        <p>hhogohogfoghgohgsohsgohsgohg</p>
-        
-        <ul>
-                {resultados.map((resultados, index) => (
-                    <li key={index}>
-                        Your monthly repayment {resultados.month}, Número:
-                        <p>{month}</p>
-                    </li>
-                    
-                ))}
-            </ul>
-        </div>
-    );
-    };
-
-
-export default MostrarResultados*/
-
-/*import './MostrarResultado.css';
-
-const MostrarResultados = ({ month }) => {
-    return (
-        <div className="sect-2">
-            <img src="../public/images/illustration-empty.svg" alt="Ilustración vacía" />
-            <span className="result">Results shown here</span>
-            <p>{month}</p>
-
-
-        </div>
-    );
-};
-
-export default MostrarResultados;*/
-
-
-
 import './MostrarResultado.css';
-
 const MostrarResultados = ({ resultados }) => {
     return (
         <div className="sect-2">
-            <img src="../public/images/illustration-empty.svg" alt="Ilustración vacía" />
-            <span className="result">Results shown here</span>
             {resultados.length === 0 ? (
-                <p>No results yet.</p>
+                <p className='no-result'>Complete the form and click calculate repayment <br /> to see what your monthly repayments would be.</p>
             ) : (
                 resultados.map((resultado, index) => (
-                    <div key={index}>
-                        <p>Amount: {resultado.amount}</p>
-                        <p>Term: {resultado.term}</p>
-                        <p>Rate: {resultado.rate}</p>
-                        <p>Total: {resultado.total}</p>
+                    <div className='res' key={index}>
+                        <h1 className='title-result'>Your results</h1>
+                        <p className='text-result'>Your results are shown below based on the information you provided. To adjust the results, edit the form and click calculate repayments again.</p>
+                        <div className='results'>
+    <p className='text-calc'>Your monthly repayments</p>
+    {
+        resultado.totalRepayment > resultado.totalInterest ? (
+            <>
+                <span className='text-num'>£{resultado.totalRepayment}</span>
+                <p className='text-calc'>Total youll repay over the term</p>
+            </>
+        ) : (
+            <>
+                <span className='text-num'>£{resultado.totalInterest}</span>
+                <p className='text-calc'>Total youll repay over the term</p>
+            </>
+        )
+    }
+</div>
+
                     </div>
                 ))
             )}
@@ -65,7 +35,9 @@ const MostrarResultados = ({ resultados }) => {
 
 export default MostrarResultados;
 
+//<p>Total: {resultado.totalRepayment}</p>
 
+//<p>Rate: {resultado.rate}</p>
 
 /*
 <ul>
@@ -75,4 +47,7 @@ export default MostrarResultados;
                     </li>
                 ))}
             </ul>
+
+            <img src="../public/images/illustration-empty.svg" alt="Ilustración vacía" />
+            <span className="result">Results shown here</span>
 */

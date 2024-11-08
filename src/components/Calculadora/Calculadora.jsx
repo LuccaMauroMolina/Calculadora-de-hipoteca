@@ -1,230 +1,350 @@
-    /*Math.abs(x): Devuelve el valor absoluto de x.
-    Math.acos(x): Devuelve el arco coseno de x, en radianes.
-    Math.asin(x): Devuelve el arco seno de x, en radianes.
-    Math.atan(x): Devuelve el arco tangente de x, en radianes.
-    Math.atan2(y, x): Devuelve el arco tangente del cociente y/x, en radianes.
-Math.ceil(x): Devuelve el entero mayor o igual más cercano a x.
-Math.cos(x): Devuelve el coseno de x, en radianes.
-Math.exp(x): Devuelve e elevado a la potencia de x, donde e es la base de los logaritmos naturales.
-Math.floor(x): Devuelve el entero menor o igual más cercano a x.
-Math.log(x): Devuelve el logaritmo natural (base e) de x.
-Math.max(a, b, c, ...): Devuelve el valor máximo de los argumentos proporcionados.
-Math.min(a, b, c, ...): Devuelve el valor mínimo de los argumentos proporcionados.
-Math.pow(base, exponent): Devuelve el valor de base elevado a la potencia de exponent.
-Math.random(): Devuelve un número pseudoaleatorio entre 0 (inclusive) y 1 (exclusivo).
-Math.round(x): Devuelve el valor de x redondeado al entero más cercano.
-Math.sin(x): Devuelve el seno de x, en radianes.
-Math.sqrt(x): Devuelve la raíz cuadrada de x.
-Math.tan(x): Devuelve la tangente de x, en radianes.
-Math.trunc(x): Devuelve la parte entera de x, eliminando la fracción.*/
-    
-
-/*Tasa de interes a tasa mensual
-Interes = 5.25
-mensual = 12
-*/
-
-//plazo de hipoteca años convertirlo a meses
-/*
-plazo = 25
-meses = 12
-*/
-
-/*import { useState } from 'react';
-import "./Calculadora.css"
-
-const Calculadora = ({ onCalcular}) => {
-    const [amount, setAmount] = useState('');
-    const [term, setTerm] = useState('');
-    const [rate, setRate] = useState('');
-    const [numero, setNumero] = useState(0);
-    const [resultados, setResultados] = useState([]);
-    const [mostrar, setMostrar] = useState([]);
-    const [month, setMonth] = useState('');
-
-    const handleKeyUp = () => {
-        console.log("Key Up Event Triggered: ", amount);
-    };
-
-    const handleCalculate = (e) => {
-        e.preventDefault();
-        onCalcular(); // Llama a la función de cálculo pasada como prop
-    };
-
-    /*const manejarCalculo = () => {
-        if (month.trim() === '') {
-            alert('Por favor, introduce una cantidad.');
-            return;
-        }
-        setResultados([...resultados, { num: numero, month: month }]);
-    };
-    const manejarCalculo = () => {
-        if (month.trim() === '') {
-            alert('Por favor, introduce una cantidad.');
-            return;
-        }
-        setResultados([...resultados, { num: numero, month: month }]);
-    };
-
-    const manejarMostrar = () => {
-        if (month.trim() === '') {
-            alert('Por favor, introduce un nombre.');
-            return;
-        }
-        setMostrar([...mostrar, { num: numero, month: month }]);
-        setNumero(prevNumero => prevNumero + 1);
-    };
-
-
-
-
-    return (
-        <>
-        <section className="sect-1">
-            <form action="">
-                <div className="form-mort">
-                <input
-                type="text"
-                onChange={e => setMonth(e.target.value)}
-                value={month}
-                placeholder="Introduce un nombre"
-                onKeyUp={e => {
-                    if (e.key === 'Enter') manejarMostrar();
-                }}
-            />
-                    <label htmlFor="amount">Mortgage Amount</label>
-                    <input
-                        type="number"
-                        className="amount"
-                        id="amount"
-                        onChange={e => setAmount(e.target.value)}
-                        onKeyUp={handleCalculate}
-                        value={amount}
-                    />
-                    <label htmlFor="mort">Mortgage Term</label>
-                    <input
-                        type="number"
-                        className="mort"
-                        id="mort"
-                        onChange={e => setTerm(e.target.value)}
-                        onKeyUp={handleKeyUp}
-                        value={term}
-                    />
-                    <label htmlFor="rate">Interest Rate</label>
-                    <input
-                        type="number"
-                        className="mort"
-                        id="rate"
-                        onChange={e => setRate(e.target.value)}
-                        onKeyUp={handleKeyUp}
-                        value={rate}
-                    />
-                </div>
-                <div>
-                    <label htmlFor="">Mortgage Type</label>
-                    <input type="checkbox"/>
-                    <p>Repayment</p>
-                    <input type="checkbox"/>
-                    <p>Interest Only</p>
-                </div>
-                <button id="btn" className="btn" onClick={handleCalculate} value={numero} >
-                    <img src="../public/images/icon-calculator.svg" alt="" />
-                    Calculate Repayments
-                </button>
-
-            </form>
-            <div>
-            </div>
-        </section>
-        </>
-    );
-};
-
-export default Calculadora;*/
-
-
-
-
-//import MostrarResultados from '../MostrarResultado/MostrarResultados';
-import { useState } from 'react';
+import { useState} from 'react';
 import './Calculadora.css';
 import MostrarResultados from '../MostrarResultado/MostrarResultados';
 
-const Calculadora = () => {
-    const [amount, setAmount] = useState('');
-    const [term, setTerm] = useState('');
-    const [rate, setRate] = useState('');
-    const [resultados, setResultados] = useState([]); // Nuevo estado para los resultados
+
+const Calculadora = ({ onCalcular }) => {
+    const [amount, setAmount] = useState("");
+    const [term, setTerm] = useState("");
+    const [rate, setRate] = useState("");
+    const [resultados, setResultados] = useState([]);
+    const [radio, setRadio] = useState('');
+    const [tecla, setTecla] = useState('');
+    const [lime, setLime] = useState({
+        amount: "initial color",
+        term: "initial color",
+        rate: "initial color",
+    })
+    const [colorRed, setColorRed] = useState("hsl(4, 69%, 50%)")
+    const [showErrorAmount, setShowErrorAmount] = useState(false);
+
+
+
+    const repayment = () => {
+        const p = parseFloat(amount);
+        const annualRate = parseFloat(rate);
+        const r = annualRate / 100 / 12;
+        const n = parseInt(term) * 12;
+        
+        if (r === 0) return p / n;
+
+        const m = p * (r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
+        return m;
+    };
+
+    const interest = () => {
+        const p = parseFloat(amount)
+        const rI = parseFloat(rate) / 100
+        const t = parseFloat(term)
+        const iTotal = p * rI * t
+
+        return iTotal
+    }
+
+    const reembolso = () => {
+        const p = parseFloat(amount);
+        const monthlyPayment = repayment(); // Llamar a la función de reembolso
+        const n = parseInt(term) * 12; // Número total de pagos
+    
+        const totalReembolso = monthlyPayment * n * p; // Total a reembolsar
+        return totalReembolso;
+    };
+    
+
+    const evento = (e) => {
+        if(e.key === 'ArrowUp' || e.key === 'ArrowDown'){
+            e.preventDefault()
+            setTecla(e.key)
+            console.log(tecla)
+        }
+    }
+
 
     const handleCalculate = (e) => {
         e.preventDefault();
-        // Calcular el total (esto es solo un ejemplo, ajusta el cálculo según tus necesidades)
-        let resultado = parseFloat(amount) + parseFloat(term) + parseFloat(rate);
+        
+        let totalRepayment = 0;
+        let totalInterest = 0;
+        let totalReembolso = 0
+
+        if (radio === "repayment") {
+            totalRepayment = repayment();
+        } else if (radio === "interest-only") {
+            totalInterest = interest();
+        }
+
+        //totalRepayment = (radio === "repayment") ? repayment() : (radio === "interest-only" ? interest() : null);
+
+        if(totalRepayment == totalInterest){
+            totalReembolso = reembolso()
+        }
+
+        const formattedTotalRepayment = parseFloat(totalRepayment).toFixed(2);
+        const formattedTotalInterest = parseFloat(totalInterest).toFixed(2);
+        const formattedTotalReembolso = parseFloat(totalReembolso).toFixed(2)
         // Crear el nuevo resultado
         const nuevoResultado = {
             amount,
             term,
             rate,
-            total: resultado
+            totalRepayment: formattedTotalRepayment,
+            totalInterest: formattedTotalInterest,
+            totalReembolso: formattedTotalReembolso,
+            tipo: radio
         };
+
+
         // Actualizar el estado de resultados
-        setResultados([...resultados, nuevoResultado]);
+            setResultados([...resultados, nuevoResultado]);
+        // Pasar el resultado a la función padre
+        onCalcular(amount, term, rate, radio, formattedTotalRepayment, formattedTotalInterest, formattedTotalReembolso);
     };
 
+    const clearAll = () => {
+        setAmount("");
+        setTerm("");
+        setRate("");
+        setResultados([]);
+        setRadio('');
+        setTecla('');
+    };
 
+    const colorLime = (input) => {
+        setLime((colors) => ({
+            ...colors,
+            [input]: amount === "" ? "hsl(61, 70%, 52%)" : colors[input],
+        }));
+    };
+    
+    const handleInputChange = (setter, value, input) => {
+        setter(value);
+        // Si el campo está vacío, mostrar el mensaje de error
+        if (value === "") {
+          setShowErrorAmount(true); // Mostrar el error cuando el campo está vacío
+            setLime((colors) => ({
+            ...colors,
+            [input]: "hsl(203, 41%, 72%)", // Color gris cuando está vacío
+            }));
+        } else {
+          setShowErrorAmount(false); // Ocultar el error si hay valor
+            setLime((colors) => ({
+            ...colors,
+            [input]: "hsl(61, 70%, 52%)", // Color normal cuando tiene valor
+            }));
+        }
+        };
+
+        if (value === "") {
+            setColorRed(); // Cambia el color a rojo si el campo está vacío
+        }
+    };
+    
+    const handleBlur = (value, input) => {
+        // Cuando el input pierde el foco
+        if (value === "") {
+          setShowErrorAmount(true); // Asegurarse de que el mensaje de error se muestre si está vacío
+            setLime((prevColors) => ({
+            ...prevColors,
+            [input]: "hsl(203, 41%, 72%)",  // Gris cuando está vacío al perder el foco
+            }));
+        }
+    };
+    
     return (
         <>
             <section className="sect-1">
+                    <div className='calculator'>
+                        <h1>Mortgage Calculator</h1>
+                        <button className='clear' onClick={clearAll}>Clear All</button>
+                    </div>
                 <form onSubmit={handleCalculate}>
                     <div className="form-mort">
                         <label htmlFor="amount">Mortgage Amount</label>
                         <input
-                            type="number"
-                            id="amount"
-                            onChange={e => setAmount(e.target.value)}
-                            value={amount}
-                            placeholder="Enter amount"
-                        />
-                        <label htmlFor="mort">Mortgage Term</label>
-                        <input
-                            type="number"
-                            id="mort"
-                            onChange={e => setTerm(e.target.value)}
-                            value={term}
-                            placeholder="Enter term"
-                        />
-                        <label htmlFor="rate">Interest Rate</label>
-                        <input
-                            type="number"
-                            id="rate"
-                            onChange={e => setRate(e.target.value)}
-                            value={rate}
-                            placeholder="Enter rate"
-                        />
-                    </div>
+                        type="number"
+                        id="amount"
+                        className='numbers'
+                        onChange={e => handleInputChange(setAmount, e.target.value, "amount")}
+                        value={amount}
+                        placeholder="£"
+                        onKeyDown={evento}
+                        style={{ border: `2px solid ${lime.amount}`, outline: 'none' }}
+                        onFocus={() => colorLime("amount")}
+                        onBlur={() => handleBlur(amount, "amount")}
+                    />
+                    {showErrorAmount && <p style={{ color: colorRed }}>This field is required</p>} 
+                    <span className='img-input'>£</span>
                     <div>
-                        <label htmlFor="repayment">Mortgage Type</label>
-                        <input type="checkbox" id="repayment" />
-                        <label htmlFor="repayment">Repayment</label>
-                        <input type="checkbox" id="interest-only" />
-                        <label htmlFor="interest-only">Interest Only</label>
-                    </div>
-                    <button
-                        id="btn"
-                        className="btn"
-                        type="submit"
-                    >
-                        <img src="../public/images/icon-calculator.svg" alt="Calculate Icon" />
-                        Calculate Repayments
-                    </button>
-                </form>
-            </section>
-            <MostrarResultados resultados={resultados} />
-        </>
-    );
-};
+                    <label htmlFor="mort" className='mortgage-term'>Mortgage Term</label>
+                    <input
+                        type="number"
+                        id="term"
+                        className='numbers'
+                        onChange={e => handleInputChange(setTerm, e.target.value, "term")}
+                        value={term}
+                        placeholder="years"
+                        onKeyDown={evento}
+                        style={{ border: `2px solid ${lime.term}`, outline: 'none' }}
+                        onFocus={() => colorLime("term")}
+                        onBlur={() => handleBlur(term, "term")}
+                    />
+                    <span className='img-input'>years</span>
+                        </div>
+                    <div>
+                    <label htmlFor="rate" className='interest'>Interest Rate</label>
+                    <input
+                        type="number"
+                        id="rate"
+                        className='numbers'
+                        onChange={e => handleInputChange(setRate, e.target.value, "rate")}
+                        value={rate}
+                        placeholder="%"
+                        onKeyDown={evento}
+                        style={{ border: `2px solid ${lime.rate}`, outline: 'none' }}
+                        onFocus={() => colorLime("rate")}
+                        onBlur={() => handleBlur(rate, "rate")}
+                    />
+                    <span className='img-input'>%</span>
+                        </div>
+                </div>
+                <div className='options'>
+                    <p htmlFor="repayment">Mortgage Type</p>
+                        <label className='labels' htmlFor="repayment">Repayment
+                        <input 
+    type="radio" 
+    id="repayment"
+    className='radio'
+    name='options' 
+    value="repayment" 
+    checked={radio === "repayment"}
+    onChange={e => setRadio(e.target.value)}
+    style={{ border: `2px solid ${lime.radio}`, outline: 'none' }}
+/>
+                        </label>
+
+                        <label className='labels' htmlFor="interest-only">Interest Only
+                    <input 
+                        type="radio" 
+                        id="interest-only"
+                        className='radio'
+                        name='options' 
+                        value="interest-only" 
+                        checked={radio === "interest-only"} 
+                        onChange={e => setRadio(e.target.value)}
+                        style={{ border: `2px solid ${lime.radio}`, outline: 'none' }}
+                        />
+                        </label>
+                        </div>
+                <button id="btn" className="btn" type="submit">
+                    <img className='icon-calc' src="../public/images/icon-calculator.svg" alt="Calculate Icon" />
+                    <p className='calculate'>Calculate Repayments</p>
+                </button>
+            </form>
+        </section>
+        <MostrarResultados resultados={resultados} />
+    </>
+);
+    
+
 
 export default Calculadora;
+/*
+    return (
+        <>
+            <section className="sect-1">
+                    <div className='calculator'>
+                        <h1>Mortgage Calculator</h1>
+                        <button className='clear' onClick={clearAll}>Clear All</button>
+                    </div>
+                <form onSubmit={handleCalculate}>
+                    <div className="form-mort">
+                        <label htmlFor="amount">Mortgage Amount</label>
+                        <input
+                        type="number"
+                        id="amount"
+                        className='numbers'
+                        onChange={e => handleInputChange(setAmount, e.target.value, "amount")}
+                        value={amount}
+                        placeholder="£"
+                        onKeyDown={evento}
+                        style={{ border: `2px solid ${lime.amount}`, outline: 'none' }}
+                        onFocus={() => colorLime("amount")}
+                        onBlur={() => handleBlur(amount, "amount")}
+                    />
+                    {showErrorAmount && <p style={{ color: colorRed }}>This field is required</p>} 
+                    <span className='img-input'>£</span>
+                    <div>
+                    <label htmlFor="mort" className='mortgage-term'>Mortgage Term</label>
+                    <input
+                        type="number"
+                        id="term"
+                        className='numbers'
+                        onChange={e => handleInputChange(setTerm, e.target.value, "term")}
+                        value={term}
+                        placeholder="years"
+                        onKeyDown={evento}
+                        style={{ border: `2px solid ${lime.term}`, outline: 'none' }}
+                        onFocus={() => colorLime("term")}
+                        onBlur={() => handleBlur(term, "term")}
+                    />
+                    <span className='img-input'>years</span>
+                        </div>
+                    <div>
+                    <label htmlFor="rate" className='interest'>Interest Rate</label>
+                    <input
+                        type="number"
+                        id="rate"
+                        className='numbers'
+                        onChange={e => handleInputChange(setRate, e.target.value, "rate")}
+                        value={rate}
+                        placeholder="%"
+                        onKeyDown={evento}
+                        style={{ border: `2px solid ${lime.rate}`, outline: 'none' }}
+                        onFocus={() => colorLime("rate")}
+                        onBlur={() => handleBlur(rate, "rate")}
+                    />
+                    <span className='img-input'>%</span>
+                        </div>
+                </div>
+                <div className='options'>
+                    <p htmlFor="repayment">Mortgage Type</p>
+                        <label className='labels' htmlFor="repayment">Repayment
+                        <input 
+    type="radio" 
+    id="repayment"
+    className='radio'
+    name='options' 
+    value="repayment" 
+    checked={radio === "repayment"}
+    onChange={e => setRadio(e.target.value)}
+    style={{ border: `2px solid ${lime.radio}`, outline: 'none' }}
+/>
+                        </label>
 
+                        <label className='labels' htmlFor="interest-only">Interest Only
+                    <input 
+                        type="radio" 
+                        id="interest-only"
+                        className='radio'
+                        name='options' 
+                        value="interest-only" 
+                        checked={radio === "interest-only"} 
+                        onChange={e => setRadio(e.target.value)}
+                        style={{ border: `2px solid ${lime.radio}`, outline: 'none' }}
+                        />
+                        </label>
+                        </div>
+                <button id="btn" className="btn" type="submit">
+                    <img className='icon-calc' src="../public/images/icon-calculator.svg" alt="Calculate Icon" />
+                    <p className='calculate'>Calculate Repayments</p>
+                </button>
+            </form>
+        </section>
+        <MostrarResultados resultados={resultados} />
+    </>
+);
+*/
 
 //<MostrarResultados resultados={resultados} />
+//{resultados.length > 0 && <MostrarResultados resultados={resultados} />}
+//<label className='label-option' htmlFor="repayment">Repayment</label>

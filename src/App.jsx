@@ -1,60 +1,4 @@
-// App.js o un componente padre que maneja Calculadora y Resultado
-/*import { useState } from 'react';
-import Calculadora from './components/Calculadora/Calculadora';
-import "../src/App.css"
-import MostrarResultados from './components/MostrarResultado/MostrarResultados';
-
-
-const App = () => {
-    const [resultados, setResultados] = useState([]);
-    const [mostrar, setMostrar] = useState([]);
-    const [numero, setNumero] = useState(0);
-    const [month, setMonth] = useState('');
-
-    const manejarCalculo = () => {
-        if (month.trim() === '') {
-            alert('Por favor, introduce una cantidad.');
-            return;
-        }
-        setResultados([...resultados, { num: numero, month: month }]);
-    };
-
-    const manejarMostrar = () => {
-        if (month.trim() === '') {
-            alert('Por favor, introduce un nombre.');
-            return;
-        }
-        setMostrar([...mostrar, { num: numero, month: month }]);
-        setNumero(prevNumero => prevNumero + 1);
-    };
-
-    return (
-        <div>
-            <input
-                type="text"
-                onChange={e => setMonth(e.target.value)}
-                value={month}
-                placeholder="Introduce un nombre"
-                onKeyUp={e => {
-                    if (e.key === 'Enter') manejarMostrar();
-                }}
-            />
-            <button onClick={manejarMostrar}>
-                Tocar
-            </button>
-
-            <p>{month}</p>
-            <section>
-                <Calculadora onCalcular={manejarCalculo} />
-                <MostrarResultados resultados={resultados} month={month} />
-            </section>
-        </div>
-    );
-};
-
-export default App;*/
-
-import { useState } from 'react';
+import { useState} from 'react';
 import Calculadora from './components/Calculadora/Calculadora';
 import "../src/App.css"
 /*import MostrarResultados from './components/MostrarResultado/MostrarResultados';
@@ -66,61 +10,41 @@ const App = () => {
     //const [mostrar, setMostrar] = useState([]);
     const [numero, setNumero] = useState(0);
     const [month, setMonth] = useState('');
+    const [red, setRed] = useState({
+        amount: "hsl(4, 69%, 50%)",
+        term: "hsl(4, 69%, 50%)",
+        rate: "hsl(4, 69%, 50%)"
+    })
 
-    const manejarCalculo = (amount,term,rate) => {
-        if (amount.trim() === '' || term.trim() === '' || rate.trim() === '') {
-            alert('Por favor, introduce una cantidad.');
+    const colorRed = (input, amount) => {
+        setRed((colors) => ({
+            ...colors,
+            [input] : amount === "" ? "hsl(4, 69%, 50%)" : colors[input]
+        }))
+    }
+
+    const manejarCalculo = (amount,term,rate, radio) => {
+        if (amount === '' || term === '' || rate === '') {
+            alert('Por favor, seleccione inputs');
+            return colorRed(red);
+        }
+        else if(radio === ''){
+            alert('Por favor, seleccione una opcion');
             return;
         }
-        setResultados([...resultados, { num: numero, month: month, amount, term, rate }]);
+        setResultados([...resultados, { num: numero, month: month, amount, term, rate, radio }]);
         setNumero(prevNumero => prevNumero + 1)
         setMonth('')
     };
 
-    /*const manejarMostrar = () => {
-        if (month.trim() === '') {
-            alert('Por favor, introduce un nombre.');
-            return;
-        }
-        setMostrar([...mostrar, { num: numero}]);
-        setNumero(prevNumero => prevNumero + 1);
-        setMonth([...month, {month: month}])
-    };*/
 
     return (
         <div>
-            {/*<input
-                type="text"
-                onChange={e => setMonth(e.target.value)}
-                value={month}
-                placeholder="Introduce un nombre"
-                onKeyUp={e => {
-                    if (e.key === 'Enter') manejarMostrar();
-                }}
-            /> */}
-            {/*<button onClick={manejarMostrar}>
-                Tocar
-            </button>*/}
-
             <section>
                 <Calculadora onCalcular={manejarCalculo} />
-                
             </section>
         </div>
     );
 };
 
 export default App;
-
-
-/*
-<input
-                type="text"
-                onChange={e => setMonth(e.target.value)}
-                value={month}
-                placeholder="Introduce un nombre"
-                onKeyUp={e => {
-                    if (e.key === 'Enter') manejarMostrar();
-                }}
-            />
-*/
