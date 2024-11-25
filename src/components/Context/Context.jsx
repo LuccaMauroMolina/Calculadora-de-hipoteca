@@ -1,21 +1,43 @@
-// src/Context/Context.js
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from 'react';
 
-export const contextRed = createContext();
+const ErrorContext = createContext();
 
-const Red = ({ children }) => {
-    const [red, setRed] = useState("hsl(4, 69%, 50%)");
+export const ErrorProvider = ({ children }) => {
+  const [errorAmount, setErrorAmount] = useState(false);
+  const [errorTerm, setErrorTerm] = useState(false);
+  const [errorRate, setErrorRate] = useState(false);
+  const [errorRadio, setErrorRadio] = useState(false);
 
-    // Esta función cambia el color a un valor predefinido
-    const colorRed = () => {
-        setRed("hsl(4, 69%, 50%)");
-    };
+  const setError = (field, value) => {
+    switch (field) {
+      case 'amount':
+        setErrorAmount(value);
+        break;
+      case 'term':
+        setErrorTerm(value);
+        break;
+      case 'rate':
+        setErrorRate(value);
+        break;
+      case 'radio':
+        setErrorRadio(value);
+        break;
+      default:
+        break;
+    }
+  };
 
-    return (
-        <contextRed.Provider value={{ red, colorRed }}>
-            {children} {/* Asegúrate de envolver los hijos */}
-        </contextRed.Provider>
-    );
-}
+  return (
+    <ErrorContext.Provider value={{ 
+      errorAmount, 
+      errorTerm, 
+      errorRate, 
+      errorRadio, 
+      setError 
+    }}>
+      {children}
+    </ErrorContext.Provider>
+  );
+};
 
-export default Red;
+export const useError = () => useContext(ErrorContext);

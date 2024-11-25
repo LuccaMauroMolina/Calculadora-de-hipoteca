@@ -191,11 +191,15 @@ label{
 
 
 
-.numbers::placeholder{
+/*.numbers::placeholder{
     color: hsl(200, 24%, 40%);
     background-color: hsl(202, 86%, 94%);
     width: fit-content;
     padding: 15px;
+}*/
+
+#amount{
+    padding-left: 3.5rem;
 }
 
 @media (min-width: 375px) and (max-width:750px) {
@@ -221,14 +225,22 @@ label{
     position: absolute;
 }
 
-.img-input:nth-of-type(1){
-    transform: translate(50px,80px);
+.sect-1 .img-input:nth-of-type(2) {
+    color: red; 
+    }
+
+.form-mort .img-input:nth-of-type(1){
+    transform: translate(20px,35px);
+    color: hsl(200, 24%, 40%);
+    background-color: hsl(202, 86%, 94%);
+    width: 20px;
+    height: 20px;
 }
 
-.img-input:nth-of-type(2){
-    transform: translate(25px,40px);
+.form-mort .img-input:nth-of-type(2){
+    transform: translate(25px,50px);
 }
 
-.img-input:nth-of-type(3){
-    transform: translate(10px,1px);
+.form-mort .img-input:nth-of-type(3){
+    transform: translate(1px,1px);
 }
