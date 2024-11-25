@@ -1,4 +1,5 @@
-/*module.exports = {
+module.exports = {
+  base: './',
   root: true,
   env: { browser: true, es2020: true },
   extends: [
@@ -18,7 +19,9 @@
       { allowConstantExport: true },
     ],
   },
-}*/
+}
+
+
 /*module.exports = {
   root: true,
   env: { browser: true, es2020: true },
@@ -40,30 +43,3 @@
     'react/prop-types': 0,
   },
 }*/
-
-// webpack.config.js
-module.exports = {
-  entry: './src/App.jsx',
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        use: 'babel-loader'
-      }
-    ]
-  },
-  resolve: {
-    extensions: ['.js', '.jsx', '.json']
-  },
-  devServer: {
-    contentBase: './dist',
-    hot: true,
-    historyApiFallback: true, // Asegura que el router de React funcione con el refresco de la página
-  },
-};
